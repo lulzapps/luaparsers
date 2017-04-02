@@ -1094,6 +1094,12 @@ function Parser:getPostInfo(postHtml)
 		dateText = string.gsub(utils.stripHtml(dateText), "%?", "")
 		dateText = dateText:gsub("^%s*(.-)%s*$", "%1")
 		postInfo["post.timestamp"] = dateText
+
+		if (string.match(dateText,",")) then
+			local datestr, timestr = dateText:match("([^,]+),([^,]+)")
+			postInfo["post.date"] = datestr
+			postInfo["post.time"] = timestr
+		end
 	else
 		postInfo["post.timestamp"] = "#<Unknown Date/Time>"
 		error.warn({ 
